@@ -78,9 +78,19 @@ class ContaBancariaTest {
                 .hasMessage("O valor da movimentação deve ser maior que zero.");
     }
 
+    @Test
+    @DisplayName("Não deve criar conta com saldo inicial negativo")
+    void naoDeveCriarContaComSaldoNegativo() {
+        Assertions.assertThatThrownBy(() -> novaConta("-0.01", true))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("O saldo inicial não pode ser negativo.");
+    }
+
     private ContaBancaria novaConta(String saldo, boolean ativa){
         return new ContaBancaria(
                 "0001", "123456-7", new BigDecimal(saldo), ativa, titular, tipoConta
         );
     }
+
+
 }
