@@ -1,0 +1,57 @@
+@baseUrl = http://localhost:8082
+
+### Estas chamadas funcionarão depois que as quatro camadas forem implementadas.
+
+### 1. Cadastrar titular
+POST {{baseUrl}}/api/pessoas
+Content-Type: application/json
+
+{
+  "nome": "Camila Ferreira",
+  "cpf": "55566677788",
+  "email": "camila.ferreira@example.com"
+}
+
+### 2. Abrir conta
+POST {{baseUrl}}/api/contas
+Content-Type: application/json
+
+{
+  "agencia": "0001",
+  "numero": "200001-9",
+  "saldoInicial": 250.00,
+  "ativa": true,
+  "titularId": 1,
+  "tipoContaId": 1
+}
+
+### 3. Consultar conta e relacionamentos
+GET {{baseUrl}}/api/contas/1
+
+### 4. Listar contas do titular
+GET {{baseUrl}}/api/contas/pessoa/1
+
+### 5. Depositar
+PATCH {{baseUrl}}/api/contas/1/depositos
+Content-Type: application/json
+
+{
+  "valor": 300.00
+}
+
+### 6. Sacar
+PATCH {{baseUrl}}/api/contas/1/saques
+Content-Type: application/json
+
+{
+  "valor": 75.50
+}
+
+### 7. Demonstrar a regra de saldo insuficiente
+PATCH {{baseUrl}}/api/contas/1/saques
+Content-Type: application/json
+
+{
+  "valor": 999999.00
+}
+
