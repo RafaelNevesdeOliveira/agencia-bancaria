@@ -1,6 +1,8 @@
 package br.edu.fiap.desafiobancario.entity;
 
 import br.edu.fiap.desafiobancario.exception.SaldoInsuficienteException;
+import br.edu.fiap.desafiobancario.exception.ValorMovimentacaoInvalidoException;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,6 +66,16 @@ class ContaBancariaTest {
 
         assertThat(conta.getSaldo()).isEqualByComparingTo("100.00");
 
+    }
+
+    @Test
+    @DisplayName("Não deve aceitar movimentação com valor zero")
+    void naoDeveAceitarValorZero() {
+        ContaBancaria conta = novaConta("100.00", true);
+
+        Assertions.assertThatThrownBy(() -> conta.depositar(BigDecimal.ZERO))
+                .isInstanceOf(ValorMovimentacaoInvalidoException.class)
+                .hasMessage("O valor da movimentação deve ser maior que zero.");
     }
 
     private ContaBancaria novaConta(String saldo, boolean ativa){
