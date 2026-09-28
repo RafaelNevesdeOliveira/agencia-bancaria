@@ -34,6 +34,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+
+        <!--
+            Usamos somente o módulo de criptografia nesta aula. Ele fornece o
+            PasswordEncoder e o BCryptPasswordEncoder sem ativar, ainda, o
+            filtro completo de autenticação do Spring Security.
+        -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
