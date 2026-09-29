@@ -46,9 +46,6 @@ public class PessoaService {
         if (pessoaRepository.existsByCpf(request.cpf())) {
             throw new CpfJaCadastradoException(request.cpf());
         }
-
-
-//        FAlSE
         Pessoa pessoa = new Pessoa(request.nome(), request.cpf(), request.email());
         return PessoaResponse.de(pessoaRepository.save(pessoa));
     }

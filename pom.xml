@@ -45,6 +45,16 @@
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
+        <!--
+            A Aula 33 ativa a cadeia completa do Spring Security. O starter
+            contém os filtros HTTP; o Resource Server lê o Bearer Token e usa
+            o módulo JOSE para validar a assinatura JWT.
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

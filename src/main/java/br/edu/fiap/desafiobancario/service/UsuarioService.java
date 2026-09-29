@@ -4,10 +4,13 @@ import br.edu.fiap.desafiobancario.dto.UsuarioRequest;
 import br.edu.fiap.desafiobancario.dto.UsuarioResponse;
 import br.edu.fiap.desafiobancario.entity.Usuario;
 import br.edu.fiap.desafiobancario.exception.EmailJaCadastradoException;
+import br.edu.fiap.desafiobancario.exception.UsuarioNaoEncontradoException;
 import br.edu.fiap.desafiobancario.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -31,6 +34,20 @@ public class UsuarioService {
         String senhaHash = passwordEncoder.encode(request.senha());
         Usuario usuario = new Usuario(request.nome(), request.email(), senhaHash);
         return UsuarioResponse.de(usuarioRepository.save(usuario));
+    }
+
+    @Transactional(readOnly = true)
+    public List<UsuarioResponse> listarTodos() {
+        return usuarioRepository.findAll().stream()
+                .map(UsuarioResponse::de)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public UsuarioResponse buscarPorId(Long id) {
+        return usuarioRepository.findById(id)
+                .map(UsuarioResponse::de)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(id));
     }
 }
 
