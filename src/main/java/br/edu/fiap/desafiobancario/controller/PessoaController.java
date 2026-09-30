@@ -3,6 +3,7 @@ package br.edu.fiap.desafiobancario.controller;
 import br.edu.fiap.desafiobancario.dto.PessoaRequest;
 import br.edu.fiap.desafiobancario.dto.PessoaResponse;
 import br.edu.fiap.desafiobancario.service.PessoaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/pessoas")
 @Tag(name = "Pessoas")
+@SecurityRequirement(name = "bearerAuth")
 public class PessoaController {
 
     private final PessoaService pessoaService;

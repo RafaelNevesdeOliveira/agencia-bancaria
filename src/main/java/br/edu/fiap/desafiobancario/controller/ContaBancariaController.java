@@ -4,6 +4,7 @@ import br.edu.fiap.desafiobancario.dto.ContaBancariaRequest;
 import br.edu.fiap.desafiobancario.dto.ContaBancariaResponse;
 import br.edu.fiap.desafiobancario.dto.MovimentacaoRequest;
 import br.edu.fiap.desafiobancario.service.ContaBancariaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +19,18 @@ import java.util.List;
  * <p>Cada método representa uma rota e delega imediatamente para o service.
  * O controller não calcula saldo e não acessa repositories, mantendo HTTP,
  * transação e regra de negócio em camadas separadas.</p>
+ *
+ * <p>{@code @SecurityRequirement(name = "bearerAuth")} fica na classe, então
+ * vale para abrir, consultar, listar, depositar e sacar. No Swagger ela
+ * liga cada rota ao esquema de {@code OpenApiConfig}: o cadeado aparece e,
+ * depois do Authorize, o Try it out envia {@code Authorization: Bearer}
+ * com o accessToken. A anotação só documenta o contrato. Quem recusa a
+ * chamada sem JWT válido é o {@code SecurityFilterChain}.</p>
  */
 @RestController
 @RequestMapping("/api/contas")
 @Tag(name = "Contas bancárias")
+@SecurityRequirement(name = "bearerAuth")
 public class ContaBancariaController {
 
     private final ContaBancariaService contaService;
