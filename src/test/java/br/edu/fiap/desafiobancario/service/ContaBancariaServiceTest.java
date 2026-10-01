@@ -1,5 +1,6 @@
 package br.edu.fiap.desafiobancario.service;
 
+import br.edu.fiap.desafiobancario.dto.ContaBancariaRequest;
 import br.edu.fiap.desafiobancario.dto.ContaBancariaResponse;
 import br.edu.fiap.desafiobancario.dto.MovimentacaoRequest;
 import br.edu.fiap.desafiobancario.entity.ContaBancaria;
@@ -86,6 +87,27 @@ class ContaBancariaServiceTest {
                 .isInstanceOf(SaldoInsuficienteException.class);
 
         assertThat(conta.getSaldo()).isEqualByComparingTo("1.00");
+    }
+
+    //TODO
+    @Test
+    @DisplayName("Deve interromper a abertura quando a conta já existe")
+    void naoDeveAbrirContaDuplicada(){
+        //ARRANGE
+        ContaBancariaRequest request = new ContaBancariaRequest(
+                "0001", "123456-7", BigDecimal.ZERO, true, 1L, 2L);
+
+        //ACT
+//        when(contaBancariaRepository.......
+
+        //ASSERT
+        assertThatThrownBy(()-> contaBancariaService.abrir(request))
+        //lancar excecao e esperar a mensagem
+
+        verify(pessoaRepository, never()).findAllById(any());
+        verify(tipoContaRepository, never()).findAllById(any());
+        verify(contaBancariaRepository, never()).findAllById(any());
+
     }
 
 
