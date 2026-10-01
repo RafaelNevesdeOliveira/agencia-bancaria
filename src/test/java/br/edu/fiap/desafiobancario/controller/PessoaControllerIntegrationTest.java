@@ -10,6 +10,7 @@ package br.edu.fiap.desafiobancario.controller;
  * <p>Cenários mínimos: cadastro com 201 e Location, entrada inválida com 400 e
  * CPF duplicado com 409.</p>
  */
+@W
 class PessoaControllerIntegrationTest {
     // TODO: configurar o web slice e implementar os três cenários HTTP.
 }
