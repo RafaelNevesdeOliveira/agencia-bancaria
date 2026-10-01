@@ -6,6 +6,7 @@ import br.edu.fiap.desafiobancario.dto.MovimentacaoRequest;
 import br.edu.fiap.desafiobancario.entity.ContaBancaria;
 import br.edu.fiap.desafiobancario.entity.Pessoa;
 import br.edu.fiap.desafiobancario.entity.TipoConta;
+import br.edu.fiap.desafiobancario.exception.ContaJaCadastradaException;
 import br.edu.fiap.desafiobancario.exception.SaldoInsuficienteException;
 import br.edu.fiap.desafiobancario.repository.ContaBancariaRepository;
 import br.edu.fiap.desafiobancario.repository.PessoaRepository;
@@ -98,11 +99,14 @@ class ContaBancariaServiceTest {
                 "0001", "123456-7", BigDecimal.ZERO, true, 1L, 2L);
 
         //ACT
-//        when(contaBancariaRepository.......
+        when(contaBancariaRepository
+                .existsByAgenciaAndNumero("0001", "123456-7")).thenReturn(true);
 
         //ASSERT
         assertThatThrownBy(()-> contaBancariaService.abrir(request))
-        //lancar excecao e esperar a mensagem
+                .isInstanceOf(ContaJaCadastradaException.class)
+                        .hasMessageContaining("123456-7");
+
 
         verify(pessoaRepository, never()).findAllById(any());
         verify(tipoContaRepository, never()).findAllById(any());
