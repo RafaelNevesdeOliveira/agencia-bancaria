@@ -72,6 +72,17 @@ class PessoaControllerIntegrationTest {
         when(pessoaService.cadastrar(any(PessoaRequest.class)))
                 .thenThrow(new CpfJaCadastradoException("12345678901"));
 
-        //ASSERT(ref exemplo acima)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/pessoas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                                {
+                                  "nome":"Mariana Costa",
+                                  "cpf":"12345678901",
+                                  "email":"mariana.costa@example.com"
+                                }
+                                """))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.status").value(409))
+                .andExpect(jsonPath("$.mensagem").value("CPF já cadastrado: 12345678901"));
     }
 }
