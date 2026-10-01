@@ -46,13 +46,13 @@ public class AutenticacaoControllerIntegrationTest {
         );
 
         mockMvc.perform(post("/api/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                        {
-                          "email": "mariana@example.com",
-                          "senha": "Senha@123"
-                        }
-                        """))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "email": "mariana@example.com",
+                                  "senha": "Senha@123"
+                                }
+                                """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").value("header.payload.signature"))
                 .andExpect(jsonPath("$.tokenType").value("Bearer"))
@@ -64,22 +64,21 @@ public class AutenticacaoControllerIntegrationTest {
 
     @Test
     @DisplayName("POST /api/auth/login deve retornar 400 para credenciais não informadas")
-    void deveValidarCamposDeLogin() throws Exception{
+    void deveValidarCamposDeLogin() throws Exception {
         mockMvc.perform(post("/api/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-//                TODO
-                .content(
-                        """
-                               {
-                               
-                               } 
-                                """
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
+                                                {
+                                                "email":"", "senha":""
+                                                } 
+                                                """
+                                )
                 )
-        )
-//                TODO (4)
-                .andExpect()
-                .andExpect()
-                .andExpect()
-                .andExpect()
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.campos.email").exists())
+                .andExpect(jsonPath("$.campos.senha").exists());
+
     }
 }
