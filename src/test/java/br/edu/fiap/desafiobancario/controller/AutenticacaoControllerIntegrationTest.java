@@ -67,6 +67,7 @@ public class AutenticacaoControllerIntegrationTest {
     void deveValidarCamposDeLogin() throws Exception{
         mockMvc.perform(post("/api/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
+//                TODO
                 .content(
                         """
                                {
@@ -75,6 +76,10 @@ public class AutenticacaoControllerIntegrationTest {
                                 """
                 )
         )
+//                TODO (4)
+                .andExpect()
+                .andExpect()
+                .andExpect()
                 .andExpect()
     }
 }
